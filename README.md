@@ -1,2 +1,2 @@
-# Number guess java
-Number guessing game in Java with UI
+# Space Race java
+Space Race game in Java with UI
