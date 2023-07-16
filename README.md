@@ -1,2 +1,2 @@
-# Number_guess_java
+# Number guess java
 Number guessing game in Java with UI
