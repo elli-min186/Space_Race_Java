@@ -1,7 +1,11 @@
 public class SpaceRace {
     public static void main(String arg[]){
   
-      System.out.println("Hello World");
-  
+      try {
+        new GameFrame();
+      }
+      catch (Exception e) {
+        System.out.println(e.getMessage());
+      }
     }
 }
