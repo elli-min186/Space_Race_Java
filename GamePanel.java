@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable {
     static final int SCREENWIDTH = 1280;
-    static final int SCREENHEIGHT = 720;
+    static final int SCREENHEIGHT = 1200;
     Thread game; //separate from all the tasks
     Graphics graphics;
     static final Dimension SCREEN = new Dimension(SCREENWIDTH, SCREENHEIGHT);
