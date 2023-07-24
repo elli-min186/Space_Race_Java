@@ -9,6 +9,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread; //separate from all the tasks
     Graphics graphics;
     static final Dimension SCREEN = new Dimension(SCREENWIDTH, SCREENHEIGHT);
+
     public enum modes { //create a new class to show specfic screen
         TITLE,
         MODE,
@@ -16,10 +17,12 @@ public class GamePanel extends JPanel implements Runnable {
         OVER
     }
     private modes states;
+    
     public TitleScreen titleScreen;
     public ModeScreen modeScreen;
     public GameScreen gameScreen;
     public EndScreen endScreen;
+    
     public GamePanel() { //constructor; always run first
         this.setFocusable(true);
         this.setPreferredSize(SCREEN);
@@ -35,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.gameThread = new Thread(this); // thread running game panel
         gameThread.start(); //run on this thread
     }
+
     @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
 
@@ -51,8 +55,8 @@ public class GamePanel extends JPanel implements Runnable {
             }
             time = currentTime; //to prevent same x
         }
-
     }
+
     public void mainGame() {
 
     }
