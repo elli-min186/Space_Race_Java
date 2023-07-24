@@ -6,9 +6,9 @@ import javax.swing.*;
 public class GamePanel extends JPanel implements Runnable {
     static final int SCREENWIDTH = 1280;
     static final int SCREENHEIGHT = 1200;
+    static final Dimension SCREEN = new Dimension(SCREENWIDTH, SCREENHEIGHT);
     Thread gameThread; //separate from all the tasks
     Graphics graphics;
-    static final Dimension SCREEN = new Dimension(SCREENWIDTH, SCREENHEIGHT);
 
     public enum modes { //create a new class to show specfic screen
         TITLE,
@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
         OVER
     }
     private modes states;
-    
+
     public TitleScreen titleScreen;
     public ModeScreen modeScreen;
     public GameScreen gameScreen;
