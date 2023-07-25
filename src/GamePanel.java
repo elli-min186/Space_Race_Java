@@ -5,10 +5,11 @@ import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable {
     static final int SCREENWIDTH = 1280;
-    static final int SCREENHEIGHT = 1200;
+    static final int SCREENHEIGHT = 920;
     static final Dimension SCREEN = new Dimension(SCREENWIDTH, SCREENHEIGHT);
     Thread gameThread; //separate from all the tasks
     Graphics graphics;
+    Image image;
 
     public enum modes { //create a new class to show specfic screen
         TITLE,
@@ -22,6 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
     public ModeScreen modeScreen;
     public GameScreen gameScreen;
     public EndScreen endScreen;
+    public Time time;
     
     public GamePanel() { //constructor; always run first
         this.setFocusable(true);
@@ -33,6 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.modeScreen = new ModeScreen(0,0,SCREENWIDTH,SCREENHEIGHT);
         this.gameScreen = new GameScreen(0,0,SCREENWIDTH,SCREENHEIGHT);
         this.endScreen = new EndScreen(0,0,SCREENWIDTH,SCREENHEIGHT);
+        this.time = new Time(0,0,SCREENWIDTH,SCREENHEIGHT);
 
         this.states = modes.GAME; //initialize states(enum)
         this.gameThread = new Thread(this); // thread running game panel
@@ -40,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
-    public void run() {
+    public void run() { // game refresh every 1/60 seconds
 
         long time = System.nanoTime(); //the current time in nano seconds
         double framePerSec = 60.0;
@@ -58,6 +61,43 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void mainGame() {
+        switch(states) {
+            case TITLE:
+                repaint(); //if something moves repaint
+                break;
+            case MODE:
+                repaint();
+                break;
+            case GAME:
+                repaint();
+                break;
+            case OVER:
+                repaint();
+                break;
+        }
+    }
 
+    public void paint(Graphics g) { //overwrites graphics in Jpanel
+        image = createImage(getWidth(), getHeight());
+        graphics = image.getGraphics();
+        draw(graphics);
+        g.drawImage(image,0,0,this);
+    }
+
+    public void draw(Graphics g) {
+        switch(states) {
+            case TITLE:
+
+                break;
+            case MODE:
+
+                break;
+            case GAME:
+                time.draw(g,SCREENWIDTH/2-10,0,20, SCREENHEIGHT);
+                break;
+            case OVER:
+
+                break;
+        }
     }
 }

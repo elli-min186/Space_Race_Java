@@ -11,7 +11,7 @@ public class GameFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setBackground(Color.BLACK);
-        this.getContentPane().setBackground(Color.BLACK);
+        this.getContentPane().setBackground(Color.white);
 
         this.setResizable(true);
         this.setLayout(new GridBagLayout());
