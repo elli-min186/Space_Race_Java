@@ -4,19 +4,20 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable {
-    static final int SCREENWIDTH = 1280;
-    static final int SCREENHEIGHT = 920;
+    static final int SCREENWIDTH = 1080;
+    static final int SCREENHEIGHT = 650;
     static final Dimension SCREEN = new Dimension(SCREENWIDTH, SCREENHEIGHT);
-    Thread gameThread; //separate from all the tasks
+    Thread gameThread; // separate from all the tasks
     Graphics graphics;
     Image image;
 
-    public enum modes { //create a new class to show specfic screen
+    public enum modes { // create a new class to show specfic screen
         TITLE,
         MODE,
         GAME,
         OVER
     }
+
     private modes states;
 
     public TitleScreen titleScreen;
@@ -24,46 +25,46 @@ public class GamePanel extends JPanel implements Runnable {
     public GameScreen gameScreen;
     public EndScreen endScreen;
     public Time time;
-    
-    public GamePanel() { //constructor; always run first
+
+    public GamePanel() { // constructor; always run first
         this.setFocusable(true);
         this.setPreferredSize(SCREEN);
         this.setMaximumSize(SCREEN);
         this.setMinimumSize(SCREEN);
 
-        this.titleScreen = new TitleScreen(0,0,SCREENWIDTH,SCREENHEIGHT);
-        this.modeScreen = new ModeScreen(0,0,SCREENWIDTH,SCREENHEIGHT);
-        this.gameScreen = new GameScreen(0,0,SCREENWIDTH,SCREENHEIGHT);
-        this.endScreen = new EndScreen(0,0,SCREENWIDTH,SCREENHEIGHT);
-        this.time = new Time(0,0,SCREENWIDTH,SCREENHEIGHT);
+        this.titleScreen = new TitleScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        this.modeScreen = new ModeScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        this.gameScreen = new GameScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        this.endScreen = new EndScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        this.time = new Time(0, 0, SCREENWIDTH, SCREENHEIGHT);
 
-        this.states = modes.GAME; //initialize states(enum)
+        this.states = modes.GAME; // initialize states(enum)
         this.gameThread = new Thread(this); // thread running game panel
-        gameThread.start(); //run on this thread
+        gameThread.start(); // run on this thread
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
     public void run() { // game refresh every 1/60 seconds
 
-        long time = System.nanoTime(); //the current time in nano seconds
+        long time = System.nanoTime(); // the current time in nano seconds
         double framePerSec = 60.0;
-        double refresh = 1000000000/framePerSec;
+        double refresh = 1000000000 / framePerSec;
         double changeTime = 0;
-        while(true) {
+        while (true) {
             long currentTime = System.nanoTime();
-            changeTime += (currentTime-time) / refresh; //in seconds (not nano)
-            if(changeTime >= 1) { // if the second is refresh, refresh
+            changeTime += (currentTime - time) / refresh; // in seconds (not nano)
+            if (changeTime >= 1) { // if the second is refresh, refresh
                 mainGame();
                 changeTime--;
             }
-            time = currentTime; //to prevent same x
+            time = currentTime; // to prevent same x
         }
     }
 
     public void mainGame() {
-        switch(states) {
+        switch (states) {
             case TITLE:
-                repaint(); //if something moves repaint
+                repaint(); // if something moves repaint
                 break;
             case MODE:
                 repaint();
@@ -77,15 +78,15 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    public void paint(Graphics g) { //overwrites graphics in Jpanel
+    public void paint(Graphics g) { // overwrites graphics in Jpanel
         image = createImage(getWidth(), getHeight());
         graphics = image.getGraphics();
         draw(graphics);
-        g.drawImage(image,0,0,this);
+        g.drawImage(image, 0, 0, this);
     }
 
     public void draw(Graphics g) {
-        switch(states) {
+        switch (states) {
             case TITLE:
 
                 break;
@@ -93,7 +94,7 @@ public class GamePanel extends JPanel implements Runnable {
 
                 break;
             case GAME:
-                time.draw(g,SCREENWIDTH/2-10,0,20, SCREENHEIGHT);
+                time.draw(g, SCREENWIDTH / 2 - 10, 2, 20, SCREENHEIGHT - 5);
                 break;
             case OVER:
 

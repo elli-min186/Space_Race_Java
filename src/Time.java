@@ -3,8 +3,6 @@ package src;
 import java.awt.*;
 
 public class Time extends Rectangle {
-    int GAMEWIDTH = 100;
-    int GAMEHEIGHT = 100;
     public Time(int x, int y, int width, int height) {
         super(x, y, width, height);
     }
@@ -12,6 +10,6 @@ public class Time extends Rectangle {
     public void draw(Graphics g, int xTime, int yTime, int widthTime, int heightTime) {
         g.drawRect(x, y, width, height);
         g.setColor(Color.white);
-        g.fillRoundRect(xTime, yTime, widthTime, heightTime,10,10);
+        g.fillRoundRect(xTime, yTime, widthTime, heightTime, 10, 10);
     }
 }
