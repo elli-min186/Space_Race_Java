@@ -1,9 +1,12 @@
 package src;
 
 import java.awt.*;
+import java.awt.event.*;
+
 import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable {
+
     static final int SCREENWIDTH = 1080;
     static final int SCREENHEIGHT = 650;
     static final Dimension SCREEN = new Dimension(SCREENWIDTH, SCREENHEIGHT);
@@ -43,7 +46,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.gameScreen = new GameScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.endScreen = new EndScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.time = new Time(0, 0, SCREENWIDTH, SCREENHEIGHT);
-        this.spaceship1 = new Spaceship(((SCREENWIDTH/2)-10)/2 - (SPACESHIPWIDTH/2),SPACESHIPHEIGHT+100,SPACESHIPWIDTH,SPACESHIPHEIGHT,1);
+        this.spaceship1 = new Spaceship((((SCREENWIDTH/2 + 10) + SCREENWIDTH)/2) - (SPACESHIPWIDTH/2), SCREENHEIGHT - SPACESHIPHEIGHT - 10, SPACESHIPWIDTH, SPACESHIPHEIGHT, 1);
+        this.spaceship2 = new Spaceship(((SCREENWIDTH/2)-10)/2 - (SPACESHIPWIDTH/2),SCREENHEIGHT - SPACESHIPHEIGHT - 10,SPACESHIPWIDTH,SPACESHIPHEIGHT,2);
 
         this.states = modes.GAME; // initialize states(enum)
         this.gameThread = new Thread(this); // thread running game panel
@@ -103,10 +107,22 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
             case GAME:
                 time.draw(g, SCREENWIDTH / 2 - 10, 2, 20, SCREENHEIGHT - 5);
+                spaceship1.draw(g);
+                spaceship2.draw(g);
                 break;
             case OVER:
 
                 break;
+        }
+    }
+    public class AL extends KeyAdapter {
+        public void keyPressed(KeyEvent e) {
+            spaceship1.keyPressed(e);
+            spaceship2.keyPressed(e);
+        }
+        public void keyReleased(KeyEvent e) {
+            spaceship1.keyReleased(e);
+            spaceship2.keyReleased(e);
         }
     }
 }

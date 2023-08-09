@@ -59,7 +59,7 @@ public class Spaceship extends Rectangle{
     public void keyPressed(KeyEvent e) {
         switch(id) {
             case 1:
-                if (e.getKeyCode() == KeyEvent.VK_UP) { //if up arrow is pressed
+                if (e.getKeyCode() == KeyEvent.VK_DOWN) { //if down arrow is pressed
                     setYvelocity(speed);
                     moveY();
                 }
@@ -71,7 +71,7 @@ public class Spaceship extends Rectangle{
                     setXvelocity(speed);
                     moveX();
                 }
-                else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                else if (e.getKeyCode() == KeyEvent.VK_UP) {
                     setYvelocity(-speed);
                     moveY();
                 }
@@ -85,11 +85,11 @@ public class Spaceship extends Rectangle{
                     setXvelocity(-speed);
                     moveX();
                 }
-                else if (e.getKeyCode() == KeyEvent.VK_S) { // down
+                else if (e.getKeyCode() == KeyEvent.VK_W) { // up
                     setYvelocity(-speed);
                     moveY();
                 }
-                else if (e.getKeyCode() == KeyEvent.VK_W) { //if up arrow is pressed with ASDW
+                else if (e.getKeyCode() == KeyEvent.VK_S) { //if down arrow is pressed with ASDW
                     setYvelocity(speed);
                     moveY();
                 }
@@ -130,7 +130,7 @@ public class Spaceship extends Rectangle{
                     setYvelocity(0);
                     moveY();
                 }
-                else if (e.getKeyCode() == KeyEvent.VK_W) { //if up arrow is pressed with ASDW
+                else if (e.getKeyCode() == KeyEvent.VK_W) { //if up is pressed with ASDW
                     setYvelocity(0);
                     moveY();
                 }
