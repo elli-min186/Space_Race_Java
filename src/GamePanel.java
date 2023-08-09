@@ -73,6 +73,13 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    public void move() {
+        spaceship1.moveX();
+        spaceship1.moveY();
+        spaceship2.moveX();
+        spaceship2.moveY();
+    }
+
     public void mainGame() {
         switch (states) {
             case TITLE:
@@ -82,6 +89,7 @@ public class GamePanel extends JPanel implements Runnable {
                 repaint();
                 break;
             case GAME:
+                move();
                 repaint();
                 break;
             case OVER:
@@ -115,6 +123,7 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
         }
     }
+
     public class AL extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
             spaceship1.keyPressed(e);
