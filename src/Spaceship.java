@@ -7,7 +7,7 @@ public class Spaceship extends Rectangle{
     private int xVelocity;
     private int yVelocity;
     private int id;
-    private int speed = 10;
+    private int speed = 3;
 
     public Spaceship(int x, int y, int width, int height, int id) {
         super(x,y,width,height);
