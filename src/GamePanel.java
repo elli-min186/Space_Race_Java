@@ -7,6 +7,9 @@ public class GamePanel extends JPanel implements Runnable {
     static final int SCREENWIDTH = 1080;
     static final int SCREENHEIGHT = 650;
     static final Dimension SCREEN = new Dimension(SCREENWIDTH, SCREENHEIGHT);
+    static final int SPACESHIPWIDTH = 100;
+    static final int SPACESHIPHEIGHT = 100;
+
     Thread gameThread; // separate from all the tasks
     Graphics graphics;
     Image image;
@@ -25,22 +28,27 @@ public class GamePanel extends JPanel implements Runnable {
     public GameScreen gameScreen;
     public EndScreen endScreen;
     public Time time;
+    public Spaceship spaceship1;
+    public Spaceship spaceship2;
 
     public GamePanel() { // constructor; always run first
         this.setFocusable(true);
         this.setPreferredSize(SCREEN);
         this.setMaximumSize(SCREEN);
         this.setMinimumSize(SCREEN);
+        this.addKeyListener(new AL());
 
         this.titleScreen = new TitleScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.modeScreen = new ModeScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.gameScreen = new GameScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.endScreen = new EndScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.time = new Time(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        this.spaceship1 = new Spaceship(((SCREENWIDTH/2)-10)/2 - (SPACESHIPWIDTH/2),SPACESHIPHEIGHT+100,SPACESHIPWIDTH,SPACESHIPHEIGHT,1);
 
         this.states = modes.GAME; // initialize states(enum)
         this.gameThread = new Thread(this); // thread running game panel
         gameThread.start(); // run on this thread
+
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
