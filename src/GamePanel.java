@@ -15,15 +15,13 @@ public class GamePanel extends JPanel implements Runnable {
     static final int SPACESHIPHEIGHT = 50;
     static final int BALLRADIUS = 5;
     static final int BALLCOUNT = 30;
-    int[] Spaceship1Rect; // spaceship 1 (right)
-    int[] Spaceship1Head;
-    int[] Spaceship1LWing;
-    int[] Spaceship1RWing;
 
-    int[] Spaceship2Rect; // spaceship 2 (left)
-    int[] Spaceship2Head;
-    int[] Spaceship2LWing;
-    int[] Spaceship2RWing;
+
+    static final int SPACESHIP1RECTX1 = (((SCREENWIDTH/2 + 10) + SCREENWIDTH)/2) - (SPACESHIPWIDTH/2);
+    static final int SPACESHIP1RECTY1 = SCREENHEIGHT - SPACESHIPHEIGHT - 10;
+
+    static final int SPACESHIP2RECTX1 = ((SCREENWIDTH/2)-10)/2 - (SPACESHIPWIDTH/2);
+    static final int SPACESHIP2RECTY1 = SCREENHEIGHT - SPACESHIPHEIGHT - 10;
     
 
     Thread gameThread; // separate from all the tasks
@@ -64,8 +62,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.time = new Time(0, 0, SCREENWIDTH, SCREENHEIGHT);
 
         
-        this.spaceship1 = new Spaceship((((SCREENWIDTH/2 + 10) + SCREENWIDTH)/2) - (SPACESHIPWIDTH/2), SCREENHEIGHT - SPACESHIPHEIGHT - 10, SPACESHIPWIDTH, SPACESHIPHEIGHT, 1);
-        this.spaceship2 = new Spaceship(((SCREENWIDTH/2)-10)/2 - (SPACESHIPWIDTH/2),SCREENHEIGHT - SPACESHIPHEIGHT - 10,SPACESHIPWIDTH,SPACESHIPHEIGHT,2);
+        this.spaceship1 = new Spaceship(SPACESHIP1RECTX1, SPACESHIP1RECTY1, SPACESHIPWIDTH, SPACESHIPHEIGHT, 1);
+        this.spaceship2 = new Spaceship(SPACESHIP2RECTX1, SPACESHIP2RECTY1, SPACESHIPWIDTH, SPACESHIPHEIGHT, 2);
 
         ballsArraylist = new ArrayList<>();
         for (int i = 0; i < BALLCOUNT; i++) { // all 30 balls in arraylist
@@ -134,7 +132,6 @@ public class GamePanel extends JPanel implements Runnable {
             case GAME:
                 move();
                 repaint();
-                System.out.println(spaceship1.getX());
                 break;
             case OVER:
                 repaint();
