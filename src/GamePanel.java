@@ -2,6 +2,7 @@ package src;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 import javax.swing.*;
 
@@ -10,8 +11,20 @@ public class GamePanel extends JPanel implements Runnable {
     static final int SCREENWIDTH = 1080;
     static final int SCREENHEIGHT = 650;
     static final Dimension SCREEN = new Dimension(SCREENWIDTH, SCREENHEIGHT);
-    static final int SPACESHIPWIDTH = 100;
-    static final int SPACESHIPHEIGHT = 100;
+    static final int SPACESHIPWIDTH = 20;
+    static final int SPACESHIPHEIGHT = 50;
+    static final int BALLRADIUS = 5;
+    static final int BALLCOUNT = 30;
+    int[] Spaceship1Rect; // spaceship 1 (right)
+    int[] Spaceship1Head;
+    int[] Spaceship1LWing;
+    int[] Spaceship1RWing;
+
+    int[] Spaceship2Rect; // spaceship 2 (left)
+    int[] Spaceship2Head;
+    int[] Spaceship2LWing;
+    int[] Spaceship2RWing;
+    
 
     Thread gameThread; // separate from all the tasks
     Graphics graphics;
@@ -33,8 +46,11 @@ public class GamePanel extends JPanel implements Runnable {
     public Time time;
     public Spaceship spaceship1;
     public Spaceship spaceship2;
+    public ArrayList<Balls> ballsArraylist;
+
 
     public GamePanel() { // constructor; always run first
+        
         this.setFocusable(true);
         this.setPreferredSize(SCREEN);
         this.setMaximumSize(SCREEN);
@@ -46,13 +62,29 @@ public class GamePanel extends JPanel implements Runnable {
         this.gameScreen = new GameScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.endScreen = new EndScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.time = new Time(0, 0, SCREENWIDTH, SCREENHEIGHT);
+
+        
         this.spaceship1 = new Spaceship((((SCREENWIDTH/2 + 10) + SCREENWIDTH)/2) - (SPACESHIPWIDTH/2), SCREENHEIGHT - SPACESHIPHEIGHT - 10, SPACESHIPWIDTH, SPACESHIPHEIGHT, 1);
         this.spaceship2 = new Spaceship(((SCREENWIDTH/2)-10)/2 - (SPACESHIPWIDTH/2),SCREENHEIGHT - SPACESHIPHEIGHT - 10,SPACESHIPWIDTH,SPACESHIPHEIGHT,2);
+
+        ballsArraylist = new ArrayList<>();
+        for (int i = 0; i < BALLCOUNT; i++) { // all 30 balls in arraylist
+            ballsArraylist.add(newBall());
+        }
+
+  
 
         this.states = modes.GAME; // initialize states(enum)
         this.gameThread = new Thread(this); // thread running game panel
         gameThread.start(); // run on this thread
 
+    }
+
+    public Balls newBall() { // a new ball at random y
+        Random rand = new Random();
+        int randomY = rand.nextInt(SCREENHEIGHT-90);
+        int randomX = rand.nextInt(SCREENWIDTH* 3/4);
+        return new Balls(randomX,randomY,BALLRADIUS * 2,BALLRADIUS * 2);
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
@@ -78,6 +110,17 @@ public class GamePanel extends JPanel implements Runnable {
         spaceship1.moveY();
         spaceship2.moveX();
         spaceship2.moveY();
+        for (int i = 0; i < BALLCOUNT; i++) {
+            ballsArraylist.get(i).move();
+        }
+    }
+
+    public void checkCollision() {
+
+    }
+
+    public void checkSpaceshipCollision() {
+
     }
 
     public void mainGame() {
@@ -91,6 +134,7 @@ public class GamePanel extends JPanel implements Runnable {
             case GAME:
                 move();
                 repaint();
+                System.out.println(spaceship1.getX());
                 break;
             case OVER:
                 repaint();
@@ -117,6 +161,10 @@ public class GamePanel extends JPanel implements Runnable {
                 time.draw(g, SCREENWIDTH / 2 - 10, 2, 20, SCREENHEIGHT - 5);
                 spaceship1.draw(g);
                 spaceship2.draw(g);
+                for (int i = 0; i < BALLCOUNT; i++) { // draw all 30 balls
+                    Balls currentBall = ballsArraylist.get(i);
+                    currentBall.draw(g);
+                }
                 break;
             case OVER:
 

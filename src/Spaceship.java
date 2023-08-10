@@ -25,9 +25,8 @@ public class Spaceship extends Rectangle{
     public int getId() {
         return id;
     }
-    public int getSpeed() {
-        return speed;
-    }
+    
+    
 
     public void setXvelocity(int xVelocity) {
         this.xVelocity = xVelocity;
@@ -40,13 +39,28 @@ public class Spaceship extends Rectangle{
     }
 
     public void draw(Graphics g) {
-        if (id == 1) {
+        if (id == 1) {  // color of body
             g.setColor(Color.red);
         }
         else if (id == 2) {
-            g.setColor(new Color(230,230,250));
+            g.setColor(new Color(87, 35, 196)); 
         }
         g.fillRect(x, y, width, height);
+        fillTriangle(g, x, y, x + width/2, y - 10, x + width, y); // head of spaceship
+        if (id == 1) { // color of wings
+            g.setColor(Color.CYAN);
+        }
+        else if (id == 2) {
+            g.setColor(new Color(195, 149, 245));
+        }
+        fillTriangle(g, x - 10, y + height + 3, x, y + 20, x, y + height); // left wing of spaceship
+        fillTriangle(g, x + width + 10, y + height + 3, x + width, y + 20, x + width, y + height); // right wing of spaceship
+        
+
+    }
+
+    public void fillTriangle(Graphics g, int x1, int y1, int x2, int y2, int x3, int y3) {
+        g.fillPolygon(new int[] {x1, x2, x3}, new int[] {y1, y2, y3}, 3);
     }
 
     public void moveX() {
