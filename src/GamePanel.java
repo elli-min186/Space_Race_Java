@@ -117,8 +117,23 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-    public void checkSpaceshipCollision() {
+    public void checkBoundaryCollision() {
 
+        // spaceship 1 (right one)
+        if (spaceship1.getTopY() == 0 || spaceship1.getBottomY() == SCREENHEIGHT) { // if the top or bottom of spaceship is at the edge of the screen
+            spaceship1.setYvelocity(0); // stop moving vertically
+        }
+        else if (spaceship1.getLeftX() == 0 || spaceship1.getRightX() == SCREENWIDTH) { // if the left or right wing of spaceship is at the edge of the screen
+            spaceship1.setXvelocity(0); // stop moving horizontally
+        }
+
+        // spaceship 2
+        if (spaceship2.getTopY() == 0 || spaceship2.getBottomY() == SCREENHEIGHT) { // if the top or bottom of spaceship is at the edge of the screen
+            spaceship2.setYvelocity(0); // stop moving vertically
+        }
+        else if (spaceship2.getLeftX() == 0 || spaceship2.getRightX() == SCREENWIDTH) { // if the left or right wing of spaceship is at the edge of the screen
+            spaceship2.setXvelocity(0); // stop moving horizontally
+        }
     }
 
     public void mainGame() {
