@@ -17,11 +17,11 @@ public class GamePanel extends JPanel implements Runnable {
     static final int BALLCOUNT = 30;
 
 
-    static final int SPACESHIP1RECTX1 = (((SCREENWIDTH/2 + 10) + SCREENWIDTH)/2) - (SPACESHIPWIDTH/2);
-    static final int SPACESHIP1RECTY1 = SCREENHEIGHT - SPACESHIPHEIGHT - 10;
+    static final int P1RECTX1 = (((SCREENWIDTH/2 + 10) + SCREENWIDTH)/2) - (SPACESHIPWIDTH/2);
+    static final int P1RECTY1 = SCREENHEIGHT - SPACESHIPHEIGHT - 10;
 
-    static final int SPACESHIP2RECTX1 = ((SCREENWIDTH/2)-10)/2 - (SPACESHIPWIDTH/2);
-    static final int SPACESHIP2RECTY1 = SCREENHEIGHT - SPACESHIPHEIGHT - 10;
+    static final int P2RECTX1 = ((SCREENWIDTH/2)-10)/2 - (SPACESHIPWIDTH/2);
+    static final int P2RECTY1 = SCREENHEIGHT - SPACESHIPHEIGHT - 10;
     
 
     Thread gameThread; // separate from all the tasks
@@ -62,8 +62,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.time = new Time(0, 0, SCREENWIDTH, SCREENHEIGHT);
 
         
-        this.spaceship1 = new Spaceship(SPACESHIP1RECTX1, SPACESHIP1RECTY1, SPACESHIPWIDTH, SPACESHIPHEIGHT, 1);
-        this.spaceship2 = new Spaceship(SPACESHIP2RECTX1, SPACESHIP2RECTY1, SPACESHIPWIDTH, SPACESHIPHEIGHT, 2);
+        this.spaceship1 = new Spaceship(P1RECTX1, P1RECTY1, SPACESHIPWIDTH, SPACESHIPHEIGHT, 1);
+        this.spaceship2 = new Spaceship(P2RECTX1, P2RECTY1, SPACESHIPWIDTH, SPACESHIPHEIGHT, 2);
 
         ballsArraylist = new ArrayList<>();
         for (int i = 0; i < BALLCOUNT; i++) { // all 30 balls in arraylist
@@ -111,6 +111,7 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < BALLCOUNT; i++) {
             ballsArraylist.get(i).move();
         }
+        time.move();
     }
 
     public void checkCollision() {
@@ -119,22 +120,35 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void checkBoundaryCollision() {
 
-        // spaceship 1 (right one)
-        if (spaceship1.getTopY() == 0 || spaceship1.getBottomY() == SCREENHEIGHT) { // if the top or bottom of spaceship is at the edge of the screen
-            spaceship1.setYvelocity(0); // stop moving vertically
+        // spaceship 1
+        if (spaceship1.y - spaceship1.getHeadHeight() <= 0) { // if the spaceship goes beyond the top boundary
+            spaceship1.y = P1RECTY1; // set y to original position
+            spaceship1.x = P1RECTX1; // set x to original position
         }
-        else if (spaceship1.getLeftX() == 0 || spaceship1.getRightX() == SCREENWIDTH) { // if the left or right wing of spaceship is at the edge of the screen
-            spaceship1.setXvelocity(0); // stop moving horizontally
+        else if (spaceship1.y + SPACESHIPHEIGHT + spaceship1.getWingHeight() >= SCREENHEIGHT) { // bottom boundary
+            spaceship1.y = SCREENHEIGHT - SPACESHIPHEIGHT - spaceship1.getWingHeight(); // set the y as 0 so it doesnt go beyond it
+        }
+        if (spaceship1.x - spaceship1.getWingWidth() <= 0) { // left boundary
+            spaceship1.x = spaceship1.getWingWidth();
+        }
+        else if (spaceship1.x + SPACESHIPWIDTH + spaceship1.getWingWidth() >= SCREENWIDTH) { // right boundary
+            spaceship1.x = SCREENWIDTH - SPACESHIPWIDTH - spaceship1.getWingWidth();
         }
 
         // spaceship 2
-        if (spaceship2.getTopY() == 0 || spaceship2.getBottomY() == SCREENHEIGHT) { // if the top or bottom of spaceship is at the edge of the screen
-            spaceship2.setYvelocity(0); // stop moving vertically
+        if (spaceship2.y - spaceship2.getHeadHeight() <= 0) { // if the spaceship goes beyond the top boundary
+            spaceship2.y = P2RECTY1; // set y to original position
+            spaceship2.x = P2RECTX1; // set x to original position
         }
-        else if (spaceship2.getLeftX() == 0 || spaceship2.getRightX() == SCREENWIDTH) { // if the left or right wing of spaceship is at the edge of the screen
-            spaceship2.setXvelocity(0); // stop moving horizontally
+        else if (spaceship2.y + SPACESHIPHEIGHT + spaceship2.getWingHeight() >= SCREENHEIGHT) { // bottom boundary
+            spaceship2.y = SCREENHEIGHT - SPACESHIPHEIGHT - spaceship2.getWingHeight(); // set the y as 0 so it doesnt go beyond it
         }
-
+        if (spaceship2.x - spaceship2.getWingWidth() <= 0) { // left boundary
+            spaceship2.x = spaceship2.getWingWidth();
+        }
+        else if (spaceship2.x + SPACESHIPWIDTH + spaceship2.getWingWidth() >= SCREENWIDTH) { // right boundary
+            spaceship2.x = SCREENWIDTH - SPACESHIPWIDTH - spaceship2.getWingWidth();
+        }
     }
 
     public void mainGame() {

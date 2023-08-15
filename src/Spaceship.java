@@ -8,17 +8,18 @@ public class Spaceship extends Rectangle{
     private int yVelocity;
     private int id;
     private int speed = 3;
-    private int topX;
-    private int topY;
-    private int leftX;
-    private int rightX;
-    private int bottomY;
+    private int wingHeight;
+    private int wingWidth;
+    private int headHeight;
 
     public Spaceship(int x, int y, int width, int height, int id) {
         super(x,y,width,height);
         this.id = id;
         xVelocity = 0;
         yVelocity = 0;
+        wingHeight = 3;
+        wingWidth = 10;
+        headHeight = 10;
     }
 
     public int getXvelocity() {
@@ -30,27 +31,15 @@ public class Spaceship extends Rectangle{
     public int getId() {
         return id;
     }
-    
-    public int getTopX() {
-        return topX;
+    public int getWingHeight() {
+        return wingHeight;
     }
-
-    public int getTopY() {
-        return topY;
+    public int getWingWidth() {
+        return wingWidth;
     }
-
-    public int getLeftX() {
-        return leftX;
+    public int getHeadHeight() {
+        return headHeight;
     }
-
-    public int getRightX() {
-        return rightX;
-    }
-
-    public int getBottomY() {
-        return bottomY;
-    }
-
 
     public void setXvelocity(int xVelocity) {
         this.xVelocity = xVelocity;
@@ -70,14 +59,7 @@ public class Spaceship extends Rectangle{
             g.setColor(new Color(87, 35, 196)); 
         }
         g.fillRect(x, y, width, height);
-
-        topX = x + width/2; // very top x of head of spaceship
-        topY = y - 10; // very top y of head of spaceship
-        leftX = x - 10; // leftmost x of spaceship
-        rightX = x + width + 10; // rightmost x of spaceship
-        bottomY = y + height + 3; // bottommost y of spaceship
-        
-        fillTriangle(g, x, y, topX, topY, x + width, y); // head of spaceship
+        fillTriangle(g, x, y, x + width/2, y - headHeight, x + width, y); // head of spaceship
 
         if (id == 1) { // color of wings
             g.setColor(new Color(15, 67, 146));
@@ -85,8 +67,8 @@ public class Spaceship extends Rectangle{
         else if (id == 2) {
             g.setColor(new Color(195, 149, 245));
         }
-        fillTriangle(g, leftX, bottomY, x, y + 20, x, y + height); // left wing of spaceship
-        fillTriangle(g, rightX, bottomY, x + width, y + 20, x + width, y + height); // right wing of spaceship
+        fillTriangle(g, x - wingWidth, y + height + wingHeight, x, y + 20, x, y + height); // left wing of spaceship
+        fillTriangle(g, x + width + wingWidth, y + height + wingHeight, x + width, y + 20, x + width, y + height); // right wing of spaceship
         
 
     }
