@@ -15,6 +15,7 @@ public class GamePanel extends JPanel implements Runnable {
     static final int SPACESHIPHEIGHT = 50;
     static final int BALLRADIUS = 5;
     static final int BALLCOUNT = 30;
+    static int counter = 0;
 
 
     static final int P1RECTX1 = (((SCREENWIDTH/2 + 10) + SCREENWIDTH)/2) - (SPACESHIPWIDTH/2);
@@ -59,7 +60,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.modeScreen = new ModeScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.gameScreen = new GameScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.endScreen = new EndScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
-        this.time = new Time(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        this.time = new Time(SCREENWIDTH / 2 - 10, 2, 20, SCREENHEIGHT - 5);
 
         
         this.spaceship1 = new Spaceship(P1RECTX1, P1RECTY1, SPACESHIPWIDTH, SPACESHIPHEIGHT, 1);
@@ -98,6 +99,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (changeTime >= 1) { // if the second is refresh, refresh
                 mainGame();
                 changeTime--;
+                counter++;
             }
             time = currentTime; // to prevent same x
         }
@@ -111,7 +113,11 @@ public class GamePanel extends JPanel implements Runnable {
         for (int i = 0; i < BALLCOUNT; i++) {
             ballsArraylist.get(i).move();
         }
-        time.move();
+        if (time.y < SCREENHEIGHT) {
+            if (counter % 6 == 0) { // time run outs in approximately 1 min
+                time.move();
+            }
+        }
     }
 
     public void checkCollision() {
@@ -186,7 +192,7 @@ public class GamePanel extends JPanel implements Runnable {
 
                 break;
             case GAME:
-                time.draw(g, SCREENWIDTH / 2 - 10, 2, 20, SCREENHEIGHT - 5);
+                time.draw(g);
                 spaceship1.draw(g);
                 spaceship2.draw(g);
                 for (int i = 0; i < BALLCOUNT; i++) { // draw all 30 balls
