@@ -40,7 +40,7 @@ public class Spaceship extends Rectangle{
 
     public void draw(Graphics g) {
         if (id == 1) {  // color of body
-            g.setColor(Color.red);
+            g.setColor(new Color(255, 73, 73));
         }
         else if (id == 2) {
             g.setColor(new Color(87, 35, 196)); 
@@ -48,7 +48,7 @@ public class Spaceship extends Rectangle{
         g.fillRect(x, y, width, height);
         fillTriangle(g, x, y, x + width/2, y - 10, x + width, y); // head of spaceship
         if (id == 1) { // color of wings
-            g.setColor(Color.CYAN);
+            g.setColor(new Color(15, 67, 146));
         }
         else if (id == 2) {
             g.setColor(new Color(195, 149, 245));
