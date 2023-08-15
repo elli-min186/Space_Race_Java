@@ -70,12 +70,13 @@ public class Spaceship extends Rectangle{
             g.setColor(new Color(87, 35, 196)); 
         }
         g.fillRect(x, y, width, height);
-        
+
         topX = x + width/2; // very top x of head of spaceship
         topY = y - 10; // very top y of head of spaceship
         leftX = x - 10; // leftmost x of spaceship
         rightX = x + width + 10; // rightmost x of spaceship
         bottomY = y + height + 3; // bottommost y of spaceship
+        
         fillTriangle(g, x, y, topX, topY, x + width, y); // head of spaceship
 
         if (id == 1) { // color of wings
