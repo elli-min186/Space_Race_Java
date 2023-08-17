@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Balls extends Rectangle {
     private int xVelocity;
-    private int speed = 4;
+    private int speed = 2;
 
     public Balls(int x, int y, int width, int height) {
         super(x, y, width, height);
@@ -36,8 +36,13 @@ public class Balls extends Rectangle {
         g.fillOval(x - width/2, y - width/2, width, width); // draw a circle
     }
 
-    public void move() {
+    public void moveRight() {
         setXvelocity(speed);
+        x += xVelocity;
+    }
+
+    public void moveLeft() {
+        setXvelocity(-speed);
         x += xVelocity;
     }
 }
