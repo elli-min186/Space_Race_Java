@@ -81,7 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Balls newBallLeft() { // a new ball at random y from the left
         Random rand = new Random();
-        int randomY = rand.nextInt(SCREENHEIGHT - 90 - BALLRADIUS * 2) + BALLRADIUS * 2;
+        int randomY = rand.nextInt(SCREENHEIGHT - 90 - BALLRADIUS * 2) + BALLRADIUS * 2; // randint(UPPERBOUND - LOWERBOUND) + LOWERBOUND
         int randomX = rand.nextInt(SCREENWIDTH * 1 / 2);
         return new Balls(randomX, randomY, BALLRADIUS * 2, BALLRADIUS * 2);
     }
