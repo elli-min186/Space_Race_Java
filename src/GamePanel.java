@@ -136,9 +136,10 @@ public class GamePanel extends JPanel implements Runnable {
         checkBoundaryCollision();
         checkBallCollision();
         checkTimeCollision();
+        checkSpaceShipBallCollision();
     }
 
-    public void checkBallCollision() {
+    public void checkBallCollision() { // if ball goes out of screen, generate new balls
         for (int i = 0; i < BALLCOUNT; i++) {
             Balls currentBall = ballsArraylist.get(i);
             if (currentBall.x >= SCREENWIDTH) {
@@ -147,6 +148,28 @@ public class GamePanel extends JPanel implements Runnable {
             } else if (currentBall.x <= 0) {
                 ballsArraylist.remove(i);
                 ballsArraylist.add(i, newBallRight());
+            }
+        }
+    }
+
+    public void checkSpaceShipBallCollision() { // check collision between spaceship and balls
+        for (int i = 0; i < BALLCOUNT; i++) {
+            Balls currentBall = ballsArraylist.get(i);
+
+            // spaceship 1
+            // balls from left hit left side of rectangle
+            if (currentBall.x + BALLRADIUS*2 >= spaceship1.x && currentBall.x + BALLRADIUS*2 <= spaceship1.x + SPACESHIPWIDTH) {
+                if (currentBall.y + BALLRADIUS *2 >= spaceship1.y && currentBall.y <= spaceship1.y + SPACESHIPHEIGHT) {
+                    spaceship1.y = P1RECTY1; // set y to original position
+                    spaceship1.x = P1RECTX1; // set x to original position
+                }
+            }
+            // balls from right hit right side of rectangle
+            if (currentBall.x <= spaceship1.x + SPACESHIPWIDTH && currentBall.x >= spaceship1.x) {
+                if (currentBall.y + BALLRADIUS *2 >= spaceship1.y && currentBall.y <= spaceship1.y + SPACESHIPHEIGHT) {
+                    spaceship1.y = P1RECTY1; // set y to original position
+                    spaceship1.x = P1RECTX1; // set x to original position
+                }
             }
         }
     }
