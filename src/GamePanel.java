@@ -151,10 +151,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void checkCollision() {
+        checkSpaceShipBallCollision();
         checkBoundaryCollision();
         checkBallCollision();
         checkTimeCollision();
-        checkSpaceShipBallCollision();
     }
 
     public void checkBallCollision() { // if ball goes out of screen, generate new balls
