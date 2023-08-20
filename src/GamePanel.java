@@ -16,7 +16,10 @@ public class GamePanel extends JPanel implements Runnable {
     static final int BALLRADIUS = 5;
     static final int BALLCOUNT = 30;
     static final int TIMEWIDTH = 20;
+    static final Font font = new Font("Osaka", Font.BOLD, 40);
     static int counter = 0;
+    static int p1score = 0;
+    static int p2score = 0;
 
     static final int P1RECTX1 = (((SCREENWIDTH / 2 + 10) + SCREENWIDTH) / 2) - (SPACESHIPWIDTH / 2);
     static final int P1RECTY1 = SCREENHEIGHT - SPACESHIPHEIGHT - 10;
@@ -276,9 +279,9 @@ public class GamePanel extends JPanel implements Runnable {
         if (spaceship1.y - spaceship1.getHeadHeight() <= 0) { // if the spaceship goes beyond the top boundary
             spaceship1.y = P1RECTY1; // set y to original position
             spaceship1.x = P1RECTX1; // set x to original position
+            p1score++;
         } else if (spaceship1.y + SPACESHIPHEIGHT + spaceship1.getWingHeight() >= SCREENHEIGHT) { // bottom boundary
-            spaceship1.y = SCREENHEIGHT - SPACESHIPHEIGHT - spaceship1.getWingHeight(); // set the y as 0 so it doesnt
-                                                                                        // go beyond it
+            spaceship1.y = SCREENHEIGHT - SPACESHIPHEIGHT - spaceship1.getWingHeight(); // set the y as 0 so it doesnt go beyond it
         }
         if (spaceship1.x - spaceship1.getWingWidth() <= 0) { // left boundary
             spaceship1.x = spaceship1.getWingWidth();
@@ -290,9 +293,9 @@ public class GamePanel extends JPanel implements Runnable {
         if (spaceship2.y - spaceship2.getHeadHeight() <= 0) { // if the spaceship goes beyond the top boundary
             spaceship2.y = P2RECTY1; // set y to original position
             spaceship2.x = P2RECTX1; // set x to original position
+            p2score++;
         } else if (spaceship2.y + SPACESHIPHEIGHT + spaceship2.getWingHeight() >= SCREENHEIGHT) { // bottom boundary
-            spaceship2.y = SCREENHEIGHT - SPACESHIPHEIGHT - spaceship2.getWingHeight(); // set the y as 0 so it doesnt
-                                                                                        // go beyond it
+            spaceship2.y = SCREENHEIGHT - SPACESHIPHEIGHT - spaceship2.getWingHeight(); // set the y as 0 so it doesnt go beyond it
         }
         if (spaceship2.x - spaceship2.getWingWidth() <= 0) { // left boundary
             spaceship2.x = spaceship2.getWingWidth();
@@ -343,11 +346,21 @@ public class GamePanel extends JPanel implements Runnable {
                     Balls currentBall = ballsArraylist.get(i);
                     currentBall.draw(g);
                 }
+                drawScore(g);
                 break;
             case OVER:
 
                 break;
         }
+    }
+
+    public void drawScore(Graphics g) {
+        g.setColor(new Color(201, 206, 214));
+        g.setFont(font);
+        // scoreboard for p1
+        g.drawString(Integer.toString(p1score), time.x + TIMEWIDTH + g.getFontMetrics(font).getHeight()/2, SCREENHEIGHT - g.getFontMetrics(font).getHeight()/2);
+        // scoreboard for p2
+        g.drawString(Integer.toString(p2score), time.x - g.getFontMetrics(font).stringWidth(Integer.toString(p2score)) - g.getFontMetrics(font).getHeight()/2, SCREENHEIGHT - g.getFontMetrics(font).getHeight()/2);
     }
 
     public class AL extends KeyAdapter {
