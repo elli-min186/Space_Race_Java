@@ -10,8 +10,8 @@ public class GameFrame extends JFrame {
         this.setTitle("Space Racer");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.setBackground(Color.BLACK);
-        this.getContentPane().setBackground(Color.white);
+        this.setBackground(new Color(20, 35, 45));
+        this.getContentPane().setBackground(new Color(20, 35, 45));
 
         this.setResizable(true);
         this.setLayout(new GridBagLayout());

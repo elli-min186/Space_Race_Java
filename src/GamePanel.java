@@ -44,7 +44,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     public TitleScreen titleScreen;
     public ModeScreen modeScreen;
-    public GameScreen gameScreen;
     public EndScreen endScreen;
     public Time time;
     public Spaceship spaceship1;
@@ -61,7 +60,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.titleScreen = new TitleScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.modeScreen = new ModeScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
-        this.gameScreen = new GameScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.endScreen = new EndScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
         this.time = new Time(SCREENWIDTH / 2 - 10, 2, TIMEWIDTH, SCREENHEIGHT - 5);
 
@@ -78,7 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         }
 
-        this.states = modes.TITLE; // initialize states(enum)
+        this.states = modes.TIMEGAME; // initialize states(enum)
         this.gameThread = new Thread(this); // thread running game panel
         gameThread.start(); // run on this thread
 
@@ -353,9 +351,10 @@ public class GamePanel extends JPanel implements Runnable {
         switch (states) {
             case TITLE:
                 titleScreen.draw(g);
+                drawBorder(g);
                 break;
             case MODE:
-
+                drawBorder(g);
                 break;
             case TIMEGAME:
             case SCOREGAME:
@@ -367,6 +366,7 @@ public class GamePanel extends JPanel implements Runnable {
                 spaceship2.draw(g);
                 time.draw(g);
                 drawScore(g);
+                drawBorder(g);
                 break;
             case OVER:
                 endScreen.drawP2wins(g);
@@ -374,6 +374,7 @@ public class GamePanel extends JPanel implements Runnable {
                 endScreen.drawQuestion(g);
                 endScreen.drawRestart(g);
                 endScreen.drawQuit(g);
+                drawBorder(g);
                 break;
         }
     }
@@ -385,6 +386,11 @@ public class GamePanel extends JPanel implements Runnable {
         g.drawString(Integer.toString(p1score), time.x + TIMEWIDTH + g.getFontMetrics(font).getHeight()/2, SCREENHEIGHT - g.getFontMetrics(font).getHeight()/2);
         // scoreboard for p2
         g.drawString(Integer.toString(p2score), time.x - g.getFontMetrics(font).stringWidth(Integer.toString(p2score)) - g.getFontMetrics(font).getHeight()/2, SCREENHEIGHT - g.getFontMetrics(font).getHeight()/2);
+    }
+
+    public void drawBorder(Graphics g) {
+        g.setColor(Color.black);
+        g.drawRect(0, 0, SCREENWIDTH-1, SCREENHEIGHT-1);
     }
 
     public class AL extends KeyAdapter {
