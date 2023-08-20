@@ -17,6 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
     static final int BALLCOUNT = 30;
     static final int TIMEWIDTH = 20;
     static final Font font = new Font("Osaka", Font.BOLD, 40);
+    static final int FINALSCOREWIN = 7;
     static int counter = 0;
     static int p1score = 0;
     static int p2score = 0;
@@ -34,7 +35,8 @@ public class GamePanel extends JPanel implements Runnable {
     public enum modes { // create a new class to show specfic screen
         TITLE,
         MODE,
-        GAME,
+        TIMEGAME,
+        SCOREGAME,
         OVER
     }
 
@@ -76,7 +78,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         }
 
-        this.states = modes.GAME; // initialize states(enum)
+        this.states = modes.TITLE; // initialize states(enum)
         this.gameThread = new Thread(this); // thread running game panel
         gameThread.start(); // run on this thread
 
@@ -128,9 +130,24 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
         }
-        if (time.y < SCREENHEIGHT) {
-            if (counter % 6 == 0) { // time run outs in approximately 1 min
-                time.move();
+        if (states == modes.TIMEGAME) {
+            if (time.y < SCREENHEIGHT) {
+                if (counter % 6 == 0) { // time run outs in approximately 1 min
+                    time.move();
+                }
+            }
+        }
+    }
+
+    public void checkState() {
+        if (states == modes.TIMEGAME) { 
+            if (time.y >= SCREENHEIGHT) { // if time run outs, end the game
+                states = modes.OVER;
+            }
+        }
+        else if (states == modes.SCOREGAME) {
+            if (p1score == FINALSCOREWIN || p2score == FINALSCOREWIN) { // if anyone reaches the max score to win, they win
+                states = modes.OVER;
             }
         }
     }
@@ -312,8 +329,10 @@ public class GamePanel extends JPanel implements Runnable {
             case MODE:
                 repaint();
                 break;
-            case GAME:
+            case TIMEGAME:
+            case SCOREGAME:
                 move();
+                checkState();
                 checkCollision();
                 repaint(); // everything that has draw function is called again
                 break;
@@ -333,23 +352,28 @@ public class GamePanel extends JPanel implements Runnable {
     public void draw(Graphics g) {
         switch (states) {
             case TITLE:
-
+                titleScreen.draw(g);
                 break;
             case MODE:
 
                 break;
-            case GAME:
-                time.draw(g);
-                spaceship1.draw(g);
-                spaceship2.draw(g);
+            case TIMEGAME:
+            case SCOREGAME:
                 for (int i = 0; i < BALLCOUNT; i++) { // draw all 30 balls
                     Balls currentBall = ballsArraylist.get(i);
                     currentBall.draw(g);
                 }
+                spaceship1.draw(g);
+                spaceship2.draw(g);
+                time.draw(g);
                 drawScore(g);
                 break;
             case OVER:
-
+                endScreen.drawP2wins(g);
+                endScreen.drawGameOver(g);
+                endScreen.drawQuestion(g);
+                endScreen.drawRestart(g);
+                endScreen.drawQuit(g);
                 break;
         }
     }
@@ -365,8 +389,23 @@ public class GamePanel extends JPanel implements Runnable {
 
     public class AL extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
-            spaceship1.keyPressed(e);
-            spaceship2.keyPressed(e);
+            if (states == modes.TIMEGAME || states == modes.SCOREGAME) {
+                spaceship1.keyPressed(e);
+                spaceship2.keyPressed(e);
+            }
+            else if (states == modes.OVER) {
+                if (endScreen.keyPressed(e) == 1) { // if user press R
+                    states = modes.MODE;
+                }
+                else if (endScreen.keyPressed(e) == 2) { // if user press esc
+                    System.exit(1);
+                }
+            }
+            else if (states == modes.TITLE) {
+                if (titleScreen.keyPressed(e) == 1) {
+                    states = modes.MODE;
+                }
+            }
         }
 
         public void keyReleased(KeyEvent e) {
