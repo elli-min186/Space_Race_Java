@@ -171,6 +171,55 @@ public class GamePanel extends JPanel implements Runnable {
                     spaceship1.x = P1RECTX1; // set x to original position
                 }
             }
+
+            // left wing collision with balls
+            if (currentBall.x + BALLRADIUS*2 >= spaceship1.x - spaceship1.getWingWidth() && currentBall.x + BALLRADIUS*2 <= spaceship1.x) {
+                if (currentBall.y + BALLRADIUS *2 <= spaceship1.y + spaceship1.getWingHeight() + SPACESHIPHEIGHT && currentBall.y >= spaceship1.y + 35) {
+                    spaceship1.y = P1RECTY1; // set y to original position
+                    spaceship1.x = P1RECTX1; // set x to original position
+                }
+            }
+
+            // right wing collision with balls
+            if (currentBall.x <= spaceship1.x + SPACESHIPWIDTH + spaceship1.getWingWidth() && currentBall.x >= spaceship1.x + SPACESHIPWIDTH) {
+                if (currentBall.y + BALLRADIUS *2 <= spaceship1.y + spaceship1.getWingHeight() + SPACESHIPHEIGHT && currentBall.y >= spaceship1.y + 35) {
+                    spaceship1.y = P1RECTY1; // set y to original position
+                    spaceship1.x = P1RECTX1; // set x to original position
+                }
+            }
+
+
+            // spaceship 2
+            // balls from left hit left side of rectangle
+            if (currentBall.x + BALLRADIUS*2 >= spaceship2.x && currentBall.x + BALLRADIUS*2 <= spaceship2.x + SPACESHIPWIDTH) {
+                if (currentBall.y + BALLRADIUS *2 >= spaceship2.y && currentBall.y <= spaceship2.y + SPACESHIPHEIGHT) {
+                    spaceship2.y = P2RECTY1; // set y to original position
+                    spaceship2.x = P2RECTX1; // set x to original position
+                }
+            }
+            // balls from right hit right side of rectangle
+            if (currentBall.x <= spaceship2.x + SPACESHIPWIDTH && currentBall.x >= spaceship2.x) {
+                if (currentBall.y + BALLRADIUS *2 >= spaceship2.y && currentBall.y <= spaceship2.y + SPACESHIPHEIGHT) {
+                    spaceship2.y = P2RECTY1; // set y to original position
+                    spaceship2.x = P2RECTX1; // set x to original position
+                }
+            }
+
+            // left wing collision with balls
+            if (currentBall.x + BALLRADIUS*2 >= spaceship2.x - spaceship2.getWingWidth() && currentBall.x + BALLRADIUS*2 <= spaceship2.x) {
+                if (currentBall.y + BALLRADIUS *2 <= spaceship2.y + spaceship2.getWingHeight() + SPACESHIPHEIGHT && currentBall.y >= spaceship2.y + 35) {
+                    spaceship2.y = P2RECTY1; // set y to original position
+                    spaceship2.x = P2RECTX1; // set x to original position
+                }
+            }
+
+            // right wing collision with balls
+            if (currentBall.x <= spaceship2.x + SPACESHIPWIDTH + spaceship2.getWingWidth() && currentBall.x >= spaceship2.x + SPACESHIPWIDTH) {
+                if (currentBall.y + BALLRADIUS *2 <= spaceship2.y + spaceship2.getWingHeight() + SPACESHIPHEIGHT && currentBall.y >= spaceship2.y + 35) {
+                    spaceship2.y = P2RECTY1; // set y to original position
+                    spaceship2.x = P2RECTX1; // set x to original position
+                }
+            }
         }
     }
 
