@@ -76,7 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         }
 
-        this.states = modes.TIMEGAME; // initialize states(enum)
+        this.states = modes.TITLE; // initialize states(enum)
         this.gameThread = new Thread(this); // thread running game panel
         gameThread.start(); // run on this thread
 
@@ -326,6 +326,8 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
             case MODE:
                 repaint();
+                p1score = 0;
+                p2score = 0;
                 break;
             case TIMEGAME:
             case SCOREGAME:
@@ -354,6 +356,7 @@ public class GamePanel extends JPanel implements Runnable {
                 drawBorder(g);
                 break;
             case MODE:
+                modeScreen.draw(g);
                 drawBorder(g);
                 break;
             case TIMEGAME:
@@ -369,11 +372,15 @@ public class GamePanel extends JPanel implements Runnable {
                 drawBorder(g);
                 break;
             case OVER:
-                endScreen.drawP2wins(g);
-                endScreen.drawGameOver(g);
-                endScreen.drawQuestion(g);
-                endScreen.drawRestart(g);
-                endScreen.drawQuit(g);
+                if (p1score > p2score) {
+                    endScreen.drawP1wins(g);
+                }
+                else if (p2score > p1score) {
+                    endScreen.drawP2wins(g);
+                }
+                else {
+                    endScreen.drawNoWins(g);
+                }
                 drawBorder(g);
                 break;
         }
@@ -388,7 +395,7 @@ public class GamePanel extends JPanel implements Runnable {
         g.drawString(Integer.toString(p2score), time.x - g.getFontMetrics(font).stringWidth(Integer.toString(p2score)) - g.getFontMetrics(font).getHeight()/2, SCREENHEIGHT - g.getFontMetrics(font).getHeight()/2);
     }
 
-    public void drawBorder(Graphics g) {
+    public void drawBorder(Graphics g) { // border between game screen and panel
         g.setColor(Color.black);
         g.drawRect(0, 0, SCREENWIDTH-1, SCREENHEIGHT-1);
     }
@@ -410,6 +417,14 @@ public class GamePanel extends JPanel implements Runnable {
             else if (states == modes.TITLE) {
                 if (titleScreen.keyPressed(e) == 1) {
                     states = modes.MODE;
+                }
+            }
+            else if (states == modes.MODE) {
+                if (modeScreen.keyPressed(e) == 1) { // if user press T
+                    states = modes.TIMEGAME;
+                }
+                else if (modeScreen.keyPressed(e) == 2) { // if user press S
+                    states = modes.SCOREGAME;
                 }
             }
         }
