@@ -326,8 +326,6 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
             case MODE:
                 repaint();
-                p1score = 0;
-                p2score = 0;
                 break;
             case TIMEGAME:
             case SCOREGAME:
@@ -408,6 +406,12 @@ public class GamePanel extends JPanel implements Runnable {
             }
             else if (states == modes.OVER) {
                 if (endScreen.keyPressed(e) == 1) { // if user press R
+                    spaceship1.x = P1RECTX1;
+                    spaceship1.y = P1RECTY1;
+                    spaceship2.x = P2RECTX1;
+                    spaceship2.y = P2RECTY1;
+                    p1score = 0;
+                    p2score = 0;
                     states = modes.MODE;
                 }
                 else if (endScreen.keyPressed(e) == 2) { // if user press esc
