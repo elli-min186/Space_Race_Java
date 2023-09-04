@@ -421,9 +421,11 @@ public class GamePanel extends JPanel implements Runnable {
             }
             else if (states == modes.MODE) {
                 if (modeScreen.keyPressed(e) == 1) { // if user press T
+                    time.y = 0;
                     states = modes.TIMEGAME;
                 }
                 else if (modeScreen.keyPressed(e) == 2) { // if user press S
+                    time.y = 0;
                     states = modes.SCOREGAME;
                 }
             }
